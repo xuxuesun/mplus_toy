@@ -1,0 +1,29 @@
+TITLE:  gmm_trialk2
+
+DATA:
+  FILE IS "xxxx";
+VARIABLE:
+  NAMES ARE id y0-y15;
+  USEVARIABLES ARE y0-y10;
+  IDVARIABLE id;
+  classes c(2);
+ANALYSIS:
+  TYPE=Mixture Random;
+  ESTIMATOR=MLR;
+  Algorithm=Integration;
+  ITERATIONS = 5000;
+  CONVERGENCE = 0.000001;
+  processors 4 (starts);
+MODEL: %overall%
+    i s | y0@2.5 y1@5 y2@7.5 y3@10 y4@12.5 y5@15 y6@17.5 y7@20 y8@22.5 y9@25 y10@27.5;
+    i@0;
+    %c#1%
+    i s | y0@2.5 y1@5 y2@7.5 y3@10 y4@12.5 y5@15 y6@17.5 y7@20 y8@22.5 y9@25 y10@27.5;
+    [i@0 s* 0.15];
+    s;
+
+    %c#2%
+    i s | y0@2.5 y1@5 y2@7.5 y3@10 y4@12.5 y5@15 y6@17.5 y7@20 y8@22.5 y9@25 y10@27.5;
+    [i@0 s* 0.2];
+    s;
+OUTPUT: CINTERVAL TECH2 TECH4 TECH14;
